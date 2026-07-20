@@ -5,10 +5,15 @@ import Features from './components/Features'
 import Process from './components/Process'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import { ScrollProgressBar, SideDots } from './components/ScrollUI'
+import { useSmoothScroll } from './hooks/useSmoothScroll'
 
 export default function App() {
+  useSmoothScroll()
   return (
     <>
+      <ScrollProgressBar />
+      <SideDots />
       <Header />
       <main>
         <Hero />

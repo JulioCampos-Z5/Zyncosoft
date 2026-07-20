@@ -35,7 +35,7 @@ export default function Header() {
             height={36}
             className="h-9 w-9 rounded-lg bg-white p-0.5"
           />
-          <span className="text-lg font-semibold tracking-tight text-white">
+          <span className="font-display text-lg font-semibold tracking-tight text-white">
             Zyncosoft
           </span>
         </a>

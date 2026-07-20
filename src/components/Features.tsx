@@ -1,75 +1,140 @@
+import { useEffect, useState } from 'react'
 import { IconBolt, IconGear, IconShield } from './icons'
+import { useReveal } from '../hooks/useScrollProgress'
+import { easeOutCubic } from '../lib/anim'
+import Reveal from './Reveal'
+import WhyVisual from './WhyVisual'
 
-const features = [
-  {
-    icon: IconGear,
-    title: 'Hecho a la medida',
-    desc: 'No adaptamos tu negocio a un software genérico. Construimos la solución alrededor de tu forma de operar.',
-  },
-  {
-    icon: IconBolt,
-    title: 'Rápido e integrado',
-    desc: 'Tus sistemas conversan entre sí: ERP, CRM, POS y catálogos comparten la misma información, sin duplicar trabajo.',
-  },
-  {
-    icon: IconShield,
-    title: 'Seguro y confiable',
-    desc: 'Infraestructura administrada con respaldos, monitoreo y buenas prácticas de seguridad para proteger tus datos.',
-  },
+const benefits = [
+  { icon: IconGear, title: 'A tu medida' },
+  { icon: IconBolt, title: 'Todo conectado' },
+  { icon: IconShield, title: 'Seguro 24/7' },
 ]
 
 const stats = [
-  { value: '100%', label: 'Proyectos a la medida' },
-  { value: '8+', label: 'Soluciones tecnológicas' },
-  { value: '24/7', label: 'Monitoreo de servidores' },
-  { value: '1', label: 'Aliado para toda tu operación' },
+  { to: 100, suffix: '%', label: 'A la medida' },
+  { to: 8, suffix: '', label: 'Soluciones' },
+  { to: 24, suffix: '/7', label: 'Monitoreo' },
+  { to: 1, suffix: '', label: 'Solo aliado' },
 ]
 
-export default function Features() {
+function CountUp({
+  to,
+  suffix,
+  start,
+}: {
+  to: number
+  suffix: string
+  start: boolean
+}) {
+  const [value, setValue] = useState(0)
+  useEffect(() => {
+    if (!start) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setValue(to)
+      return
+    }
+    let raf = 0
+    const duration = 1100
+    const t0 = performance.now()
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - t0) / duration)
+      setValue(Math.round(easeOutCubic(p) * to))
+      if (p < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [start, to])
   return (
-    <section id="porque" className="scroll-mt-20 border-t border-ink-line/60 py-24">
+    <span>
+      {value}
+      {suffix}
+    </span>
+  )
+}
+
+export default function Features() {
+  const { ref, shown } = useReveal<HTMLDivElement>(0.3)
+  const { ref: cardsReveal, shown: cardsShown } = useReveal<HTMLDivElement>(0.2)
+
+  return (
+    <section
+      id="porque"
+      className="scroll-mt-20 border-t border-ink-line/60 py-28"
+    >
       <div className="container-x">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-widest text-fox-500">
-              Por qué Zyncosoft
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              Astutos como un zorro para resolver tu tecnología
-            </h2>
-            <p className="mt-4 text-neutral-400">
-              Unimos desarrollo de software e infraestructura en un mismo equipo,
-              para que tengas una sola conversación en lugar de cinco
-              proveedores. Simple, ágil y pensado para crecer contigo.
-            </p>
+          <div ref={ref}>
+            <Reveal direction="right">
+              <p className="text-sm font-semibold uppercase tracking-widest text-fox-500">
+                Por qué Zyncosoft
+              </p>
+            </Reveal>
+            <Reveal direction="right" delay={90}>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                Un aliado, no cinco proveedores
+              </h2>
+            </Reveal>
+            <Reveal direction="right" delay={170}>
+              <p className="mt-4 text-neutral-400">
+                Software e infraestructura en un mismo equipo. Una sola
+                conversación para todo.
+              </p>
+            </Reveal>
 
             <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-ink-line bg-ink-line">
-              {stats.map((s) => (
-                <div key={s.label} className="bg-ink-soft p-6">
-                  <dt className="text-3xl font-semibold text-white">{s.value}</dt>
+              {stats.map((s, i) => (
+                <div
+                  key={s.label}
+                  className="bg-ink-soft p-6 transition-all duration-700"
+                  style={{
+                    opacity: shown ? 1 : 0,
+                    transform: shown ? 'none' : 'translateY(16px)',
+                    transitionDelay: `${i * 90}ms`,
+                  }}
+                >
+                  <dt className="font-display text-3xl font-bold text-white sm:text-4xl">
+                    <CountUp to={s.to} suffix={s.suffix} start={shown} />
+                  </dt>
                   <dd className="mt-1 text-sm text-neutral-400">{s.label}</dd>
                 </div>
               ))}
             </dl>
           </div>
 
-          <div className="flex flex-col gap-4">
-            {features.map((f) => (
-              <div
-                key={f.title}
-                className="flex gap-4 rounded-2xl border border-ink-line bg-ink-soft p-6 transition-colors hover:border-neutral-600"
-              >
-                <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-fox-500/10 text-fox-400 ring-1 ring-inset ring-fox-500/20">
-                  <f.icon className="h-6 w-6" />
-                </span>
-                <div>
-                  <h3 className="text-lg font-semibold text-white">{f.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-neutral-400">
-                    {f.desc}
-                  </p>
+          <div ref={cardsReveal} className="flex flex-col gap-5">
+            {/* Gráfico: de 5 proveedores a 1 aliado */}
+            <div
+              className="rounded-2xl border border-ink-line bg-ink-soft p-5 transition-all duration-700"
+              style={{
+                opacity: cardsShown ? 1 : 0,
+                transform: cardsShown ? 'none' : 'translateX(24px) scale(0.98)',
+              }}
+            >
+              <WhyVisual className="h-auto w-full" />
+            </div>
+
+            {/* Beneficios en chips concisos */}
+            <div className="grid grid-cols-3 gap-3">
+              {benefits.map((b, i) => (
+                <div
+                  key={b.title}
+                  className="flex flex-col items-center gap-2 rounded-2xl border border-ink-line bg-ink-soft p-4 text-center transition-all duration-700 hover:border-fox-600/40"
+                  style={{
+                    opacity: cardsShown ? 1 : 0,
+                    transform: cardsShown ? 'none' : 'translateY(16px)',
+                    transitionDelay: `${150 + i * 100}ms`,
+                  }}
+                >
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-fox-500/10 text-fox-400 ring-1 ring-inset ring-fox-500/20">
+                    <b.icon className="h-5 w-5" />
+                  </span>
+                  <span className="text-sm font-semibold text-white">
+                    {b.title}
+                  </span>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
