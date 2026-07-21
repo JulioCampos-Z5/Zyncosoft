@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "packageManager": "pnpm@9.15.9",
   "description": "Sitio web de Zyncosoft — software administrativo, ERP, CRM, puntos de venta e infraestructura tecnológica.",
   "scripts": {
     "dev": "vite",
