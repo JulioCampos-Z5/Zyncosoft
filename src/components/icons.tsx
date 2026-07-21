@@ -112,6 +112,15 @@ export const IconMail: Icon = (p) => (
   </svg>
 )
 
+export const IconShare: Icon = (p) => (
+  <svg {...base} {...p}>
+    <circle cx="18" cy="5" r="2.5" />
+    <circle cx="6" cy="12" r="2.5" />
+    <circle cx="18" cy="19" r="2.5" />
+    <path d="M8.3 10.8l7.4-4.3M8.3 13.2l7.4 4.3" />
+  </svg>
+)
+
 /** Glifo de marca: va relleno, no de trazo como los demás */
 export const IconWhatsapp: Icon = (p) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...p}>

@@ -30,18 +30,15 @@ export default function Footer() {
     <footer className="border-t border-ink-line/60 py-14">
       <div className="container-x">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-2.5">
-              <img
-                src="/logo.png"
-                alt="Logotipo de Zyncosoft"
-                width={36}
-                height={36}
-                className="h-9 w-9 rounded-lg bg-white p-0.5"
-              />
-              <span className="text-lg font-semibold text-white">Zyncosoft</span>
-            </div>
-            <p className="mt-4 max-w-xs text-sm text-neutral-400">
+          <div className="flex items-center gap-4 lg:col-span-2">
+            <img
+              src="/logo.png"
+              alt="Logotipo de Zyncosoft"
+              width={72}
+              height={72}
+              className="h-18 w-18 shrink-0 rounded-xl bg-white p-1"
+            />
+            <p className="max-w-xs text-sm text-neutral-400">
               Hacemos el sistema que tu empresa necesita y nos encargamos de que
               funcione todos los días.
             </p>

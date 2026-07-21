@@ -8,3 +8,7 @@ dist-ssr
 .DS_Store
 npm-debug.log*
 pnpm-debug.log*
+
+# Cache y secretos de las pruebas locales con Wrangler
+.wrangler
+.dev.vars

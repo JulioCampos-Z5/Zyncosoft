@@ -1,7 +1,19 @@
 import { useState } from 'react'
-import { IconArrow, IconCheck, IconMail, IconWhatsapp } from './icons'
+import {
+  IconArrow,
+  IconCheck,
+  IconMail,
+  IconShare,
+  IconWhatsapp,
+} from './icons'
 import { useReveal } from '../hooks/useScrollProgress'
-import { CORREO, TELEFONO_VISIBLE, WHATSAPP_URL } from '../lib/contacto'
+import {
+  CORREO,
+  QR_WHATSAPP,
+  SITIO_URL,
+  TELEFONO_VISIBLE,
+  WHATSAPP_URL,
+} from '../lib/contacto'
 
 const serviceTags = [
   'Ordenar inventario y ventas',
@@ -131,6 +143,28 @@ export default function Contact() {
                   </span>
                   {CORREO}
                 </a>
+
+                {/* QR al chat de WhatsApp + compartir el sitio */}
+                <div className="flex items-center gap-4 rounded-2xl border border-ink-line bg-ink/50 p-4">
+                  <img
+                    src={QR_WHATSAPP}
+                    alt="Código QR que abre una conversación de WhatsApp con Zyncosoft"
+                    width={104}
+                    height={104}
+                    loading="lazy"
+                    className="h-26 w-26 shrink-0 rounded-lg bg-white p-1.5"
+                  />
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-white">
+                      Escanea y escríbenos
+                    </p>
+                    <p className="mt-1 text-sm text-neutral-400">
+                      Apunta la cámara de tu celular al código y se abre el chat
+                      solo.
+                    </p>
+                    <BotonCompartir />
+                  </div>
+                </div>
               </div>
 
               <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-neutral-500">
@@ -272,6 +306,53 @@ export default function Contact() {
         </div>
       </div>
     </section>
+  )
+}
+
+/**
+ * Comparte el sitio. En celular abre el menú nativo de compartir; en
+ * escritorio, donde casi ningún navegador lo tiene, copia el enlace.
+ */
+function BotonCompartir() {
+  const [copiado, setCopiado] = useState(false)
+
+  const compartir = async () => {
+    const datos = {
+      title: 'Zyncosoft',
+      text: 'Software administrativo hecho a la medida de tu negocio.',
+      url: SITIO_URL,
+    }
+    try {
+      if (navigator.share) {
+        await navigator.share(datos)
+        return
+      }
+      await navigator.clipboard.writeText(SITIO_URL)
+      setCopiado(true)
+      setTimeout(() => setCopiado(false), 2200)
+    } catch {
+      // El usuario canceló el menú de compartir: no hay nada que avisar
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={compartir}
+      className="mt-3 inline-flex items-center gap-2 rounded-full border border-ink-line bg-ink-soft px-4 py-2 text-sm font-semibold text-neutral-300 transition-colors hover:border-fox-600/40 hover:text-white"
+    >
+      {copiado ? (
+        <>
+          <IconCheck className="h-4 w-4 text-fox-500" />
+          ¡Enlace copiado!
+        </>
+      ) : (
+        <>
+          <IconShare className="h-4 w-4" />
+          Compartir Zyncosoft
+        </>
+      )}
+    </button>
   )
 }
 

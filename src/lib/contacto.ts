@@ -8,3 +8,6 @@ const MENSAJE = '¡Hola! Vengo de la página de Zyncosoft y me gustaría más in
 
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_INTL}?text=${encodeURIComponent(MENSAJE)}`
 export const CORREO = 'zyncosoft@gmail.com'
+export const SITIO_URL = 'https://zyncosoft.pages.dev/'
+/** Generado con el mismo enlace que WHATSAPP_URL (ver public/qr-whatsapp.svg) */
+export const QR_WHATSAPP = '/qr-whatsapp.svg'
