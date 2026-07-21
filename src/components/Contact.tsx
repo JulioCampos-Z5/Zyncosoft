@@ -20,15 +20,43 @@ const trust = [
   'Te decimos el precio antes de empezar',
 ]
 
+type Estado = 'listo' | 'enviando' | 'enviado' | 'error'
+
 export default function Contact() {
   const { ref, shown } = useReveal<HTMLDivElement>(0.2)
   const [selected, setSelected] = useState<string[]>([])
-  const [sent, setSent] = useState(false)
+  const [estado, setEstado] = useState<Estado>('listo')
 
   const toggle = (tag: string) =>
     setSelected((s) =>
       s.includes(tag) ? s.filter((t) => t !== tag) : [...s, tag],
     )
+
+  const enviar = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (estado === 'enviando') return
+    setEstado('enviando')
+
+    const datos = new FormData(e.currentTarget)
+    try {
+      const res = await fetch('/api/contacto', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          nombre: datos.get('nombre'),
+          correo: datos.get('correo'),
+          empresa: datos.get('empresa'),
+          mensaje: datos.get('mensaje'),
+          website: datos.get('website'), // campo trampa
+          servicios: selected,
+        }),
+      })
+      if (!res.ok) throw new Error(String(res.status))
+      setEstado('enviado')
+    } catch {
+      setEstado('error')
+    }
+  }
 
   return (
     <section id="contacto" className="scroll-mt-20 py-28">
@@ -117,7 +145,7 @@ export default function Contact() {
 
             {/* Formulario / estado de éxito */}
             <div className="relative rounded-2xl border border-ink-line bg-ink p-6 sm:p-7">
-              {sent ? (
+              {estado === 'enviado' ? (
                 <div className="flex animate-pop flex-col items-center py-10 text-center">
                   <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-fox-500/15 ring-1 ring-inset ring-fox-500/30">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-fox-500 opacity-20" />
@@ -135,7 +163,7 @@ export default function Contact() {
                   <button
                     type="button"
                     onClick={() => {
-                      setSent(false)
+                      setEstado('listo')
                       setSelected([])
                     }}
                     className="mt-6 text-sm font-semibold text-fox-400 transition-colors hover:text-fox-500"
@@ -144,13 +172,7 @@ export default function Contact() {
                   </button>
                 </div>
               ) : (
-                <form
-                  className="grid gap-4"
-                  onSubmit={(e) => {
-                    e.preventDefault()
-                    setSent(true)
-                  }}
-                >
+                <form className="grid gap-4" onSubmit={enviar}>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <Field label="Nombre" name="nombre" placeholder="Tu nombre" required />
                     <Field
@@ -200,13 +222,49 @@ export default function Contact() {
                     />
                   </label>
 
+                  {/* Campo trampa: las personas no lo ven, los bots lo llenan */}
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden
+                    className="absolute left-[-9999px] h-0 w-0 opacity-0"
+                  />
+
                   <button
                     type="submit"
-                    className="group mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-fox-400 to-fox-600 px-6 py-3 text-sm font-semibold text-ink shadow-lg shadow-fox-500/20 transition-all hover:shadow-fox-500/40"
+                    disabled={estado === 'enviando'}
+                    className="group mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-fox-400 to-fox-600 px-6 py-3 text-sm font-semibold text-ink shadow-lg shadow-fox-500/20 transition-all hover:shadow-fox-500/40 disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    Enviar mensaje
-                    <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    {estado === 'enviando' ? (
+                      <>
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-ink/30 border-t-ink" />
+                        Enviando…
+                      </>
+                    ) : (
+                      <>
+                        Enviar mensaje
+                        <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                      </>
+                    )}
                   </button>
+
+                  {estado === 'error' && (
+                    <p className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+                      No pudimos enviar tu mensaje. Vuelve a intentarlo o
+                      escríbenos por{' '}
+                      <a
+                        href={WHATSAPP_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold underline"
+                      >
+                        WhatsApp
+                      </a>
+                      .
+                    </p>
+                  )}
                 </form>
               )}
             </div>
