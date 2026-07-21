@@ -84,29 +84,88 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const destino = env.CORREO_DESTINO || 'zyncosoft@gmail.com'
   const remitente = env.CORREO_FROM || 'Zyncosoft <onboarding@resend.dev>'
 
+  const fecha = new Intl.DateTimeFormat('es-MX', {
+    dateStyle: 'long',
+    timeStyle: 'short',
+    timeZone: 'America/Mexico_City',
+  }).format(new Date())
+
   const filas: [string, string][] = [
     ['Nombre', nombre],
+    ['Empresa', empresa || 'No la indicó'],
     ['Correo', correo],
-    ['Empresa', empresa || '—'],
-    ['Le interesa', servicios.length ? servicios.join(', ') : '—'],
+    ['Le interesa', servicios.length ? servicios.join(' · ') : 'No eligió nada'],
+    ['Recibido', fecha],
   ]
 
-  const html = `
-    <div style="font-family:system-ui,sans-serif;line-height:1.6;color:#111">
-      <h2 style="margin:0 0 16px">Nuevo mensaje desde zyncosoft.com</h2>
-      <table style="border-collapse:collapse">
-        ${filas
-          .map(
-            ([k, v]) =>
-              `<tr><td style="padding:4px 16px 4px 0;color:#666">${k}</td><td style="padding:4px 0"><strong>${escapar(v)}</strong></td></tr>`,
-          )
-          .join('')}
+  // Estilos en línea: los clientes de correo ignoran las hojas de estilo
+  const celdaEtiqueta =
+    'padding:10px 16px 10px 0;color:#8a8a8a;font-size:13px;white-space:nowrap;vertical-align:top'
+  const celdaValor = 'padding:10px 0;font-size:15px;color:#111'
+
+  const html = `<!doctype html>
+<html lang="es"><body style="margin:0;padding:24px 12px;background:#f2f2f2">
+  <!-- Resumen que aparece en la bandeja, antes de abrir -->
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0">${escapar(
+    `${nombre}${empresa ? ` (${empresa})` : ''}: ${mensaje || 'sin mensaje'}`,
+  ).slice(0, 140)}</div>
+
+  <table role="presentation" width="100%" style="border-collapse:collapse">
+    <tr><td align="center">
+      <table role="presentation" width="100%" style="max-width:560px;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">
+
+        <tr><td style="background:#0a0a0a;padding:20px 28px">
+          <p style="margin:0;color:#ff7a1a;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase">Zyncosoft</p>
+          <p style="margin:4px 0 0;color:#fff;font-size:19px;font-weight:600">Nuevo contacto desde el sitio</p>
+        </td></tr>
+
+        <tr><td style="padding:24px 28px 8px">
+          <table role="presentation" style="border-collapse:collapse;width:100%">
+            ${filas
+              .map(
+                ([k, v], i) =>
+                  `<tr${i ? ' style="border-top:1px solid #f0f0f0"' : ''}>
+                     <td style="${celdaEtiqueta}">${k}</td>
+                     <td style="${celdaValor}"><strong>${escapar(v)}</strong></td>
+                   </tr>`,
+              )
+              .join('')}
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:16px 28px 0">
+          <p style="margin:0 0 8px;color:#8a8a8a;font-size:13px">Su mensaje</p>
+          <div style="white-space:pre-wrap;padding:16px 18px;background:#fafafa;border-left:3px solid #ff7a1a;border-radius:0 8px 8px 0;font-size:15px;line-height:1.6;color:#111">${
+            escapar(mensaje) ||
+            '<span style="color:#aaa">No escribió mensaje.</span>'
+          }</div>
+        </td></tr>
+
+        <tr><td style="padding:24px 28px 28px">
+          <a href="mailto:${escapar(correo)}?subject=${encodeURIComponent(`Re: tu mensaje a Zyncosoft`)}"
+             style="display:inline-block;background:#ff7a1a;color:#0a0a0a;font-weight:700;font-size:15px;text-decoration:none;padding:13px 26px;border-radius:999px">
+            Responder a ${escapar(nombre.split(' ')[0])}
+          </a>
+          <p style="margin:14px 0 0;color:#9a9a9a;font-size:12px;line-height:1.5">
+            También puedes contestar este correo directamente: la respuesta le llega a ${escapar(correo)}.
+          </p>
+        </td></tr>
       </table>
-      <p style="margin:20px 0 6px;color:#666">Mensaje</p>
-      <p style="white-space:pre-wrap;margin:0;padding:12px 14px;background:#f5f5f5;border-radius:8px">${
-        escapar(mensaje) || '<em style="color:#999">Sin mensaje</em>'
-      }</p>
-    </div>`
+    </td></tr>
+  </table>
+</body></html>`
+
+  // Versión en texto: mejora la entrega y es lo que se ve en relojes y modo sin imágenes
+  const texto = [
+    'NUEVO CONTACTO DESDE ZYNCOSOFT',
+    '',
+    ...filas.map(([k, v]) => `${k}: ${v}`),
+    '',
+    'Mensaje:',
+    mensaje || '(no escribió mensaje)',
+    '',
+    `Responde a este correo y le llega a ${correo}.`,
+  ].join('\n')
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -121,6 +180,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       reply_to: correo,
       subject: `Nuevo contacto: ${unaLinea(nombre)}${empresa ? ` — ${unaLinea(empresa)}` : ''}`,
       html,
+      text: texto,
     }),
   })
 
