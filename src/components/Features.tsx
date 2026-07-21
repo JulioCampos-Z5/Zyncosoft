@@ -6,16 +6,28 @@ import Reveal from './Reveal'
 import WhyVisual from './WhyVisual'
 
 const benefits = [
-  { icon: IconGear, title: 'A tu medida' },
-  { icon: IconBolt, title: 'Todo conectado' },
-  { icon: IconShield, title: 'Seguro 24/7' },
+  {
+    icon: IconGear,
+    title: 'A tu medida',
+    desc: 'Se adapta a cómo trabajas hoy, no al revés.',
+  },
+  {
+    icon: IconBolt,
+    title: 'Todo conectado',
+    desc: 'Vendes una vez y se descuenta del inventario solo.',
+  },
+  {
+    icon: IconShield,
+    title: 'Siempre cuidado',
+    desc: 'Respaldos diarios y alguien vigilando que no se caiga.',
+  },
 ]
 
 const stats = [
-  { to: 100, suffix: '%', label: 'A la medida' },
-  { to: 8, suffix: '', label: 'Soluciones' },
-  { to: 24, suffix: '/7', label: 'Monitoreo' },
-  { to: 1, suffix: '', label: 'Solo aliado' },
+  { to: 8, suffix: '', label: 'Servicios, todos con nosotros' },
+  { to: 1, suffix: '', label: 'Número al que llamas si algo pasa' },
+  { to: 24, suffix: '/7', label: 'Vigilancia de tus sistemas' },
+  { to: 0, suffix: '', label: 'Lo que cuesta la primera plática' },
 ]
 
 function CountUp({
@@ -72,13 +84,14 @@ export default function Features() {
             </Reveal>
             <Reveal direction="right" delay={90}>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-                Un aliado, no cinco proveedores
+                Un solo aliado, no cinco proveedores
               </h2>
             </Reveal>
             <Reveal direction="right" delay={170}>
               <p className="mt-4 text-neutral-400">
-                Software e infraestructura en un mismo equipo. Una sola
-                conversación para todo.
+                Hoy uno te hizo la página, otro el sistema, otro el correo… y
+                cuando algo falla, cada quien culpa al otro y tú pierdes el día.
+                Con nosotros marcas un solo número y nosotros lo resolvemos.
               </p>
             </Reveal>
 
@@ -115,7 +128,7 @@ export default function Features() {
             </div>
 
             {/* Beneficios en chips concisos */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid gap-3 sm:grid-cols-3">
               {benefits.map((b, i) => (
                 <div
                   key={b.title}
@@ -131,6 +144,9 @@ export default function Features() {
                   </span>
                   <span className="text-sm font-semibold text-white">
                     {b.title}
+                  </span>
+                  <span className="text-xs leading-snug text-neutral-400">
+                    {b.desc}
                   </span>
                 </div>
               ))}

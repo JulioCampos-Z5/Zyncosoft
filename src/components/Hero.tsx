@@ -3,7 +3,14 @@ import ParticleField from './ParticleField'
 import { usePinProgress } from '../hooks/useScrollProgress'
 import { clamp, mapRange } from '../lib/anim'
 
-const badges = ['ERP', 'CRM', 'Punto de venta', 'Cotizadores', 'Catálogos']
+const badges = [
+  'Inventario y ventas',
+  'Clientes y seguimiento',
+  'Punto de venta',
+  'Cotizaciones',
+  'Catálogo en línea',
+  'Correo y dominio',
+]
 
 export default function Hero() {
   const { ref, progress } = usePinProgress<HTMLElement>()
@@ -72,20 +79,20 @@ export default function Hero() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-fox-500 opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-fox-500" />
               </span>
-              Software administrativo a la medida
+              Sistemas hechos a la medida de tu negocio
             </span>
 
             <h1 className="mt-6 text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
-              Tecnología que{' '}
+              Deja de llevar tu negocio{' '}
               <span className="bg-gradient-to-r from-fox-400 to-fox-600 bg-clip-text text-transparent">
-                ordena y hace crecer
-              </span>{' '}
-              tu empresa
+                en Excel y en la cabeza
+              </span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-xl text-pretty text-lg text-neutral-400">
-              Software a la medida e infraestructura, con un solo aliado. Del
-              sistema que ordena tu operación al servidor que lo sostiene.
+              Hacemos el sistema que tu empresa necesita —ventas, inventario,
+              clientes, cobros— y nos encargamos de que funcione todos los días.
+              Tú no tienes que saber de tecnología: para eso estamos nosotros.
             </p>
 
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -93,28 +100,29 @@ export default function Hero() {
                 href="#contacto"
                 className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-ink shadow-lg shadow-fox-500/10 transition-colors hover:bg-fox-500"
               >
-                Solicitar una demo
+                Agenda una llamada gratis
                 <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </a>
               <a
                 href="#servicios"
                 className="inline-flex items-center gap-2 rounded-full border border-ink-line bg-ink/40 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition-colors hover:border-neutral-500"
               >
-                Ver soluciones
+                Ver qué hacemos
               </a>
             </div>
 
             <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-neutral-500">
               <li className="flex items-center gap-1.5">
-                <IconCheck className="h-4 w-4 text-fox-500" /> Implementación
-                acompañada
+                <IconCheck className="h-4 w-4 text-fox-500" /> Capacitamos a tu
+                equipo
               </li>
               <li className="flex items-center gap-1.5">
-                <IconCheck className="h-4 w-4 text-fox-500" /> Soporte continuo
+                <IconCheck className="h-4 w-4 text-fox-500" /> Si algo falla, nos
+                llamas a nosotros
               </li>
               <li className="flex items-center gap-1.5">
-                <IconCheck className="h-4 w-4 text-fox-500" /> A la medida de tu
-                negocio
+                <IconCheck className="h-4 w-4 text-fox-500" /> Se adapta a cómo
+                trabajas hoy
               </li>
             </ul>
 

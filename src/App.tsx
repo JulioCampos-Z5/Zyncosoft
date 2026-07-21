@@ -6,6 +6,7 @@ import Process from './components/Process'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import { ScrollProgressBar, SideDots } from './components/ScrollUI'
+import WhatsappFab from './components/WhatsappFab'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <WhatsappFab />
     </>
   )
 }

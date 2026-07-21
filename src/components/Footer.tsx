@@ -1,15 +1,26 @@
 const cols = [
   {
-    title: 'Soluciones',
-    links: ['ERP', 'CRM', 'Puntos de venta', 'Cotizadores', 'Catálogos'],
+    title: 'Para ordenar tu operación',
+    links: [
+      'Inventario y ventas (ERP)',
+      'Clientes y seguimiento (CRM)',
+      'Punto de venta',
+      'Cotizaciones',
+      'Catálogo en línea',
+    ],
   },
   {
-    title: 'Infraestructura',
-    links: ['Servidores', 'Hosting', 'Dominios', 'Correo corporativo'],
+    title: 'Para que todo siga en línea',
+    links: [
+      'Servidores y hosting',
+      'Dominio de tu empresa',
+      'Correo profesional',
+      'Respaldos y monitoreo',
+    ],
   },
   {
-    title: 'Empresa',
-    links: ['Servicios', 'Por qué Zyncosoft', 'Proceso', 'Contacto'],
+    title: 'Zyncosoft',
+    links: ['Qué hacemos', 'Por qué nosotros', 'Cómo trabajamos', 'Contacto'],
   },
 ]
 
@@ -31,8 +42,8 @@ export default function Footer() {
               <span className="text-lg font-semibold text-white">Zyncosoft</span>
             </div>
             <p className="mt-4 max-w-xs text-sm text-neutral-400">
-              Software administrativo a la medida e infraestructura tecnológica
-              para hacer crecer tu empresa.
+              Hacemos el sistema que tu empresa necesita y nos encargamos de que
+              funcione todos los días.
             </p>
           </div>
 

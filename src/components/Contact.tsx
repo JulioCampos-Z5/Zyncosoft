@@ -1,19 +1,24 @@
 import { useState } from 'react'
-import { IconArrow, IconCheck, IconMail, IconPhone } from './icons'
+import { IconArrow, IconCheck, IconMail, IconWhatsapp } from './icons'
 import { useReveal } from '../hooks/useScrollProgress'
+import { CORREO, TELEFONO_VISIBLE, WHATSAPP_URL } from '../lib/contacto'
 
 const serviceTags = [
-  'ERP',
-  'CRM',
-  'Punto de venta',
-  'Cotizadores',
-  'Catálogos',
-  'Servidores',
-  'Dominios',
-  'Consultoría',
+  'Ordenar inventario y ventas',
+  'Dar seguimiento a clientes',
+  'Cobrar en mostrador',
+  'Hacer cotizaciones',
+  'Vender en línea',
+  'Servidor o página lenta',
+  'Correo con mi dominio',
+  'Todavía no sé',
 ]
 
-const trust = ['Respuesta en 24 h', 'Sin compromiso', 'Propuesta a tu medida']
+const trust = [
+  'Te contestamos en menos de 24 h',
+  'La primera plática no cuesta',
+  'Te decimos el precio antes de empezar',
+]
 
 export default function Contact() {
   const { ref, shown } = useReveal<HTMLDivElement>(0.2)
@@ -64,30 +69,39 @@ export default function Contact() {
                 Contacto
               </p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-                Hablemos de tu proyecto
+                Cuéntanos qué te está costando trabajo
               </h2>
               <p className="mt-4 max-w-md text-neutral-400">
-                Cuéntanos qué necesitas. Te respondemos con una propuesta clara.
+                No necesitas saber cómo se llama lo que buscas ni usar palabras
+                técnicas. Descríbelo como se lo contarías a un amigo y nosotros
+                te respondemos con una propuesta clara y con precio.
               </p>
 
               <div className="mt-8 flex flex-col gap-3">
                 <a
-                  href="mailto:contacto@zyncosoft.com"
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-3 rounded-2xl border border-[#25D366]/30 bg-[#25D366]/10 px-4 py-3 font-semibold text-white transition-colors hover:border-[#25D366]/60 hover:bg-[#25D366]/20"
+                >
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#25D366]/15 text-[#25D366] ring-1 ring-inset ring-[#25D366]/25 transition-transform group-hover:scale-105">
+                    <IconWhatsapp className="h-5 w-5" />
+                  </span>
+                  <span className="flex flex-col leading-tight">
+                    Escríbenos por WhatsApp
+                    <span className="text-sm font-normal text-neutral-400">
+                      {TELEFONO_VISIBLE}
+                    </span>
+                  </span>
+                </a>
+                <a
+                  href={`mailto:${CORREO}`}
                   className="group inline-flex items-center gap-3 rounded-2xl border border-ink-line bg-ink/50 px-4 py-3 text-neutral-300 transition-colors hover:border-fox-600/40 hover:text-white"
                 >
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-fox-500/10 text-fox-400 ring-1 ring-inset ring-fox-500/20 transition-transform group-hover:scale-105">
                     <IconMail className="h-5 w-5" />
                   </span>
-                  contacto@zyncosoft.com
-                </a>
-                <a
-                  href="tel:+520000000000"
-                  className="group inline-flex items-center gap-3 rounded-2xl border border-ink-line bg-ink/50 px-4 py-3 text-neutral-300 transition-colors hover:border-fox-600/40 hover:text-white"
-                >
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-fox-500/10 text-fox-400 ring-1 ring-inset ring-fox-500/20 transition-transform group-hover:scale-105">
-                    <IconPhone className="h-5 w-5" />
-                  </span>
-                  +52 000 000 0000
+                  {CORREO}
                 </a>
               </div>
 
@@ -152,7 +166,7 @@ export default function Contact() {
                   {/* Selector de servicios con chips */}
                   <div>
                     <span className="mb-2 block text-sm text-neutral-300">
-                      ¿En qué te ayudamos?
+                      ¿Qué quieres resolver? Elige lo que se parezca
                     </span>
                     <div className="flex flex-wrap gap-2">
                       {serviceTags.map((tag) => {
@@ -181,7 +195,7 @@ export default function Contact() {
                     <textarea
                       name="mensaje"
                       rows={3}
-                      placeholder="Cuéntanos sobre tu proyecto…"
+                      placeholder="Ej. Llevo el inventario en Excel y nunca cuadra con lo que hay en bodega…"
                       className="w-full resize-none rounded-xl border border-ink-line bg-ink-soft px-3.5 py-2.5 text-white transition-all placeholder:text-neutral-600 focus:border-fox-500 focus:outline-none focus:ring-4 focus:ring-fox-500/15"
                     />
                   </label>

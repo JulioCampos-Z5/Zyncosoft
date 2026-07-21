@@ -6,23 +6,23 @@ import { processScenes } from './ProcessVisuals'
 const steps = [
   {
     n: '01',
-    title: 'Diagnóstico',
-    desc: 'Entendemos tu negocio y objetivos.',
+    title: 'Platicamos',
+    desc: 'Nos cuentas cómo trabajas hoy y qué te quita más tiempo. Esta plática no cuesta nada.',
   },
   {
     n: '02',
-    title: 'Diseño',
-    desc: 'Definimos la solución a tu medida.',
+    title: 'Te lo mostramos',
+    desc: 'Antes de programar nada, ves cómo se vería tu sistema y cuánto cuesta. Sin sorpresas.',
   },
   {
     n: '03',
-    title: 'Implementación',
-    desc: 'Construimos y ponemos en marcha.',
+    title: 'Lo ponemos a andar',
+    desc: 'Lo construimos, pasamos tu información y le enseñamos a usarlo a tu equipo.',
   },
   {
     n: '04',
-    title: 'Soporte',
-    desc: 'Monitoreo y mejoras continuas.',
+    title: 'Nos quedamos contigo',
+    desc: 'Dudas, cambios y vigilancia del sistema. No te dejamos solo el día que entregamos.',
   },
 ]
 
@@ -61,8 +61,14 @@ export default function Process() {
             </Reveal>
             <Reveal delay={100}>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-                De la idea a la operación, paso a paso
+                Cuatro pasos, sin letras chiquitas
               </h2>
+            </Reveal>
+            <Reveal delay={160}>
+              <p className="mt-3 text-neutral-400">
+                Así se ve trabajar con nosotros, desde la primera llamada hasta
+                mucho después de la entrega.
+              </p>
             </Reveal>
           </div>
 

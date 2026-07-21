@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
+import { IconWhatsapp } from './icons'
+import { WHATSAPP_URL } from '../lib/contacto'
 
 const links = [
-  { href: '#servicios', label: 'Servicios' },
-  { href: '#porque', label: 'Por qué Zyncosoft' },
-  { href: '#proceso', label: 'Proceso' },
+  { href: '#servicios', label: 'Qué hacemos' },
+  { href: '#porque', label: 'Por qué nosotros' },
+  { href: '#proceso', label: 'Cómo trabajamos' },
   { href: '#contacto', label: 'Contacto' },
 ]
 
@@ -57,7 +59,7 @@ export default function Header() {
             href="#contacto"
             className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-ink transition-colors hover:bg-fox-500"
           >
-            Solicitar demo
+            Hablemos
           </a>
         </div>
 
@@ -87,11 +89,14 @@ export default function Header() {
               </a>
             ))}
             <a
-              href="#contacto"
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-full bg-white px-5 py-2.5 text-center text-sm font-semibold text-ink"
+              className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-center text-sm font-semibold text-white"
             >
-              Solicitar demo
+              <IconWhatsapp className="h-4 w-4" />
+              Escríbenos por WhatsApp
             </a>
           </nav>
         </div>

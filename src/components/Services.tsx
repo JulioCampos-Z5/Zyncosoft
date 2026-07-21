@@ -6,6 +6,8 @@ import { serviceVisuals, type ServiceVisualKey } from './ServiceVisuals'
 
 type Service = {
   visual: ServiceVisualKey
+  /** Nombre técnico: se muestra pequeño, para quien ya lo conoce */
+  tag: string
   title: string
   desc: string
 }
@@ -13,43 +15,51 @@ type Service = {
 const services: Service[] = [
   {
     visual: 'erp',
-    title: 'Sistema ERP',
-    desc: 'Todo tu negocio en un solo sistema.',
+    tag: 'ERP',
+    title: 'Todo tu negocio en una sola pantalla',
+    desc: 'Inventario, ventas, compras y gastos en el mismo lugar. Se acabaron los diez Excel que nunca cuadran.',
   },
   {
     visual: 'crm',
-    title: 'CRM',
-    desc: 'Nunca pierdas un cliente ni una venta.',
+    tag: 'CRM',
+    title: 'Que no se te escape ningún cliente',
+    desc: 'Cada cliente, cotización y seguimiento en orden. Sabes a quién le toca llamada hoy.',
   },
   {
     visual: 'pos',
-    title: 'Punto de venta',
-    desc: 'Cobra rápido y controla tu caja.',
+    tag: 'Punto de venta',
+    title: 'Cobra rápido y cuadra tu caja',
+    desc: 'Vendes, imprimes ticket y haces el corte del día sin sacar la calculadora.',
   },
   {
     visual: 'quote',
-    title: 'Cotizadores',
-    desc: 'Cotizaciones profesionales en segundos.',
+    tag: 'Cotizadores',
+    title: 'Cotiza en minutos, no en horas',
+    desc: 'Precios, descuentos e impuestos se calculan solos. Mandas un PDF con tu logo el mismo día.',
   },
   {
     visual: 'catalog',
-    title: 'Catálogos digitales',
-    desc: 'Tu catálogo listo para vender en línea.',
+    tag: 'Catálogos digitales',
+    title: 'Tu catálogo en un link',
+    desc: 'Tus productos con foto y precio, listos para mandar por WhatsApp o redes.',
   },
   {
     visual: 'server',
-    title: 'Servidores y hosting',
-    desc: 'Tu operación siempre en línea.',
+    tag: 'Servidores y hosting',
+    title: 'Que tu sistema nunca se caiga',
+    desc: 'Cuidamos el servidor donde vive tu sistema. Si algo falla, lo vemos antes que tú.',
   },
   {
     visual: 'domain',
-    title: 'Dominios y correo',
-    desc: 'Tu dominio y correo profesional.',
+    tag: 'Dominios y correo',
+    title: 'Correo con el nombre de tu empresa',
+    desc: 'ventas@tuempresa.com en vez de un @gmail. Nosotros lo damos de alta y lo configuramos.',
   },
   {
     visual: 'consult',
-    title: 'Consultoría',
-    desc: 'Te guiamos en cada decisión tecnológica.',
+    tag: 'Consultoría',
+    title: 'Te decimos qué sí necesitas',
+    desc: 'Revisamos cómo trabajas y te decimos qué te conviene… y qué no vale la pena.',
   },
 ]
 
@@ -103,17 +113,18 @@ export default function Services() {
         <div className="container-x">
           <Reveal>
             <p className="text-sm font-semibold uppercase tracking-widest text-fox-500">
-              Soluciones
+              Qué hacemos
             </p>
           </Reveal>
           <Reveal delay={100}>
             <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              Un aliado para todo tu software
+              Ocho formas de quitarte trabajo de encima
             </h2>
           </Reveal>
           <Reveal delay={160}>
             <p className="mt-3 max-w-lg text-neutral-400">
-              Ocho soluciones que se conectan entre sí. Desliza para verlas.
+              Cada una resuelve un dolor concreto del día a día y todas se
+              conectan entre sí. Desliza para verlas.
             </p>
           </Reveal>
         </div>
@@ -133,24 +144,27 @@ export default function Services() {
               return (
                 <article
                   key={s.title}
-                  className="group relative flex h-[20rem] w-[80vw] shrink-0 flex-col overflow-hidden rounded-3xl border border-ink-line bg-ink-soft transition-colors sm:w-[26rem]"
+                  className="group relative flex h-92 w-[80vw] shrink-0 flex-col overflow-hidden rounded-3xl border border-ink-line bg-ink-soft transition-colors sm:w-[26rem]"
                   style={{
                     borderColor:
                       focus > 0.5 ? 'rgba(232,93,4,0.45)' : undefined,
                   }}
                 >
                   {/* Maqueta visual del producto */}
-                  <div className="relative flex h-[58%] items-center justify-center border-b border-ink-line bg-ink px-6 pt-6">
+                  <div className="relative flex h-[48%] items-center justify-center border-b border-ink-line bg-ink px-6 pt-6">
                     <span className="absolute right-4 top-4 font-display text-xs font-bold text-neutral-600">
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <Visual className="h-full w-full" />
                   </div>
                   <div className="flex flex-1 flex-col justify-center p-6">
-                    <h3 className="text-xl font-semibold text-white">
+                    <p className="text-[0.7rem] font-semibold uppercase tracking-widest text-fox-500">
+                      {s.tag}
+                    </p>
+                    <h3 className="mt-1.5 text-xl font-semibold leading-snug text-white">
                       {s.title}
                     </h3>
-                    <p className="mt-1.5 text-[0.95rem] leading-snug text-neutral-400">
+                    <p className="mt-2 text-[0.95rem] leading-snug text-neutral-400">
                       {s.desc}
                     </p>
                   </div>
@@ -164,18 +178,19 @@ export default function Services() {
             })}
 
             {/* Panel de cierre / CTA */}
-            <div className="flex h-[20rem] w-[80vw] shrink-0 flex-col justify-center rounded-3xl border border-dashed border-ink-line p-7 text-center sm:w-[26rem]">
+            <div className="flex h-92 w-[80vw] shrink-0 flex-col justify-center rounded-3xl border border-dashed border-ink-line p-7 text-center sm:w-[26rem]">
               <p className="text-lg font-semibold text-white">
-                ¿No ves lo que buscas?
+                ¿Lo tuyo no aparece aquí?
               </p>
               <p className="mt-2 text-sm text-neutral-400">
-                Diseñamos software a la medida de tu operación.
+                Cuéntanos cómo trabajas hoy y te decimos si podemos ayudarte. No
+                necesitas saber cómo se llama lo que buscas.
               </p>
               <a
                 href="#contacto"
                 className="mx-auto mt-5 inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-fox-500"
               >
-                Cuéntanos tu idea
+                Cuéntanos tu caso
               </a>
             </div>
           </div>

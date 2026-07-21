@@ -16,9 +16,9 @@ export function ScrollProgressBar() {
 
 const sections = [
   { id: 'top', label: 'Inicio' },
-  { id: 'servicios', label: 'Servicios' },
-  { id: 'porque', label: 'Por qué' },
-  { id: 'proceso', label: 'Proceso' },
+  { id: 'servicios', label: 'Qué hacemos' },
+  { id: 'porque', label: 'Por qué nosotros' },
+  { id: 'proceso', label: 'Cómo trabajamos' },
   { id: 'contacto', label: 'Contacto' },
 ]
 
