@@ -26,6 +26,17 @@ const serviceTags = [
   'Todavía no sé',
 ]
 
+/** Opcional: nos dice qué canal está funcionando para atraer clientes */
+const origenes = [
+  'Google',
+  'Facebook o Instagram',
+  'WhatsApp',
+  'Me lo recomendaron',
+  'Tarjeta o código QR',
+  'Ya los conocía',
+  'Otro',
+]
+
 const trust = [
   'Te contestamos en menos de 24 h',
   'La primera plática no cuesta',
@@ -57,7 +68,9 @@ export default function Contact() {
         body: JSON.stringify({
           nombre: datos.get('nombre'),
           correo: datos.get('correo'),
+          telefono: datos.get('telefono'),
           empresa: datos.get('empresa'),
+          origen: datos.get('origen'),
           mensaje: datos.get('mensaje'),
           website: datos.get('website'), // campo trampa
           servicios: selected,
@@ -217,7 +230,18 @@ export default function Contact() {
                       required
                     />
                   </div>
-                  <Field label="Empresa" name="empresa" placeholder="Nombre de tu empresa" />
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <Field
+                      label="Teléfono"
+                      name="telefono"
+                      type="tel"
+                      inputMode="tel"
+                      autoComplete="tel"
+                      placeholder="33 1234 5678"
+                      required
+                    />
+                    <Field label="Empresa" name="empresa" placeholder="Nombre de tu empresa" />
+                  </div>
 
                   {/* Selector de servicios con chips */}
                   <div>
@@ -254,6 +278,41 @@ export default function Contact() {
                       placeholder="Ej. Llevo el inventario en Excel y nunca cuadra con lo que hay en bodega…"
                       className="w-full resize-none rounded-xl border border-ink-line bg-ink-soft px-3.5 py-2.5 text-white transition-all placeholder:text-neutral-600 focus:border-fox-500 focus:outline-none focus:ring-4 focus:ring-fox-500/15"
                     />
+                  </label>
+
+                  <label className="text-sm">
+                    <span className="mb-1.5 block text-neutral-300">
+                      ¿Dónde nos ubicaste?{' '}
+                      <span className="text-neutral-500">(opcional)</span>
+                    </span>
+                    <div className="relative">
+                      <select
+                        name="origen"
+                        defaultValue=""
+                        className="w-full appearance-none rounded-xl border border-ink-line bg-ink-soft px-3.5 py-2.5 pr-10 text-white transition-all focus:border-fox-500 focus:outline-none focus:ring-4 focus:ring-fox-500/15"
+                      >
+                        <option value="" className="bg-ink-soft text-neutral-500">
+                          -
+                        </option>
+                        {origenes.map((o) => (
+                          <option key={o} value={o} className="bg-ink-soft text-white">
+                            {o}
+                          </option>
+                        ))}
+                      </select>
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 24 24"
+                        className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-500"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={1.8}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="m6 9 6 6 6-6" />
+                      </svg>
+                    </div>
                   </label>
 
                   {/* Campo trampa: las personas no lo ven, los bots lo llenan */}
@@ -362,12 +421,16 @@ function Field({
   type = 'text',
   placeholder,
   required,
+  inputMode,
+  autoComplete,
 }: {
   label: string
   name: string
   type?: string
   placeholder?: string
   required?: boolean
+  inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode']
+  autoComplete?: string
 }) {
   return (
     <label className="text-sm">
@@ -377,6 +440,8 @@ function Field({
         name={name}
         placeholder={placeholder}
         required={required}
+        inputMode={inputMode}
+        autoComplete={autoComplete}
         className="w-full rounded-xl border border-ink-line bg-ink-soft px-3.5 py-2.5 text-white transition-all placeholder:text-neutral-600 focus:border-fox-500 focus:outline-none focus:ring-4 focus:ring-fox-500/15"
       />
     </label>

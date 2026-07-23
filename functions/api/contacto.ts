@@ -25,14 +25,24 @@ type PagesFunction<E> = (ctx: {
 type Payload = {
   nombre?: string
   correo?: string
+  telefono?: string
   empresa?: string
+  /** Dónde nos encontró: lo elige de una lista, es opcional */
+  origen?: string
   mensaje?: string
   servicios?: string[]
   /** Campo trampa: invisible para las personas, los bots sí lo llenan */
   website?: string
 }
 
-const MAX = { nombre: 120, correo: 160, empresa: 160, mensaje: 4000 }
+const MAX = {
+  nombre: 120,
+  correo: 160,
+  telefono: 40,
+  empresa: 160,
+  origen: 60,
+  mensaje: 4000,
+}
 
 const json = (data: unknown, status = 200) =>
   new Response(JSON.stringify(data), {
@@ -71,7 +81,9 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
   const nombre = limpiar(body.nombre, MAX.nombre)
   const correo = limpiar(body.correo, MAX.correo)
+  const telefono = limpiar(body.telefono, MAX.telefono)
   const empresa = limpiar(body.empresa, MAX.empresa)
+  const origen = limpiar(body.origen, MAX.origen)
   const mensaje = limpiar(body.mensaje, MAX.mensaje)
   const servicios = Array.isArray(body.servicios)
     ? body.servicios.slice(0, 20).map((s) => limpiar(s, 60)).filter(Boolean)
@@ -94,9 +106,20 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     ['Nombre', nombre],
     ['Empresa', empresa || 'No la indicó'],
     ['Correo', correo],
+    ['Teléfono', telefono || 'No lo indicó'],
     ['Le interesa', servicios.length ? servicios.join(' · ') : 'No eligió nada'],
+    ['Nos ubicó en', origen || 'No lo dijo'],
     ['Recibido', fecha],
   ]
+
+  // Enlace directo de WhatsApp: si vienen 10 dígitos asumimos México (52)
+  const digitos = telefono.replace(/\D/g, '')
+  const waNumero =
+    digitos.length === 10
+      ? `52${digitos}`
+      : digitos.length >= 11 && digitos.length <= 15
+        ? digitos
+        : ''
 
   // Estilos en línea: los clientes de correo ignoran las hojas de estilo
   const celdaEtiqueta =
@@ -146,6 +169,14 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
              style="display:inline-block;background:#ff7a1a;color:#0a0a0a;font-weight:700;font-size:15px;text-decoration:none;padding:13px 26px;border-radius:999px">
             Responder a ${escapar(nombre.split(' ')[0])}
           </a>
+          ${
+            waNumero
+              ? `<a href="https://wa.me/${waNumero}"
+             style="display:inline-block;margin-left:10px;background:#25D366;color:#0a0a0a;font-weight:700;font-size:15px;text-decoration:none;padding:13px 26px;border-radius:999px">
+            WhatsApp
+          </a>`
+              : ''
+          }
           <p style="margin:14px 0 0;color:#9a9a9a;font-size:12px;line-height:1.5">
             También puedes contestar este correo directamente: la respuesta le llega a ${escapar(correo)}.
           </p>
