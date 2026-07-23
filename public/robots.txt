@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# El catálogo todavía no se publica: quitar esta línea cuando se muestre
+Disallow: /catalogo
+
 Sitemap: https://www.zyncosoft.com/sitemap.xml

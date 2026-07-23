@@ -8,9 +8,11 @@ import Footer from './components/Footer'
 import { ScrollProgressBar, SideDots } from './components/ScrollUI'
 import WhatsappFab from './components/WhatsappFab'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
+import { useHashLanding } from './hooks/useHashLanding'
 
 export default function App() {
   useSmoothScroll()
+  useHashLanding()
   return (
     <>
       <ScrollProgressBar />

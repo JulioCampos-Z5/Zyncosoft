@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { usePinProgress } from '../hooks/useScrollProgress'
 import { clamp, mapRange } from '../lib/anim'
+import { CATALOGO_URL, SHOW_CATALOGO } from '../lib/flags'
 import Reveal from './Reveal'
 import { serviceVisuals, type ServiceVisualKey } from './ServiceVisuals'
 
@@ -13,6 +14,42 @@ type Service = {
 }
 
 const services: Service[] = [
+  {
+    visual: 'web',
+    tag: 'Páginas web',
+    title: 'Que te encuentren y te tomen en serio',
+    desc: 'Tu sitio con la información que sí importa, rápido y que se ve bien desde el celular.',
+  },
+  {
+    visual: 'ecommerce',
+    tag: 'Venta en línea',
+    title: 'Vende aunque tu local esté cerrado',
+    desc: 'Tu tienda cobrando con tarjeta y transferencia, con los pedidos llegándote ordenados.',
+  },
+  {
+    visual: 'catalog',
+    tag: 'Catálogos digitales',
+    title: 'Tu catálogo en un link',
+    desc: 'Tus productos con foto y precio, listos para mandar por WhatsApp o redes.',
+  },
+  {
+    visual: 'card',
+    tag: 'Tarjetas digitales',
+    title: 'Tu tarjeta de presentación, sin papel',
+    desc: 'Un link o un QR con tus datos, redes y WhatsApp. Se comparte en segundos y nunca se acaba.',
+  },
+  {
+    visual: 'mobile',
+    tag: 'Apps móviles',
+    title: 'Tu sistema en el bolsillo de tu equipo',
+    desc: 'App para Android y iPhone para vender, levantar pedidos o revisar tu negocio desde donde estés.',
+  },
+  {
+    visual: 'desktop',
+    tag: 'Apps de escritorio',
+    title: 'Un programa hecho para tu computadora',
+    desc: 'Para el trabajo pesado del mostrador o la oficina. Funciona aunque se caiga el internet.',
+  },
   {
     visual: 'erp',
     tag: 'ERP',
@@ -38,10 +75,10 @@ const services: Service[] = [
     desc: 'Precios, descuentos e impuestos se calculan solos. Mandas un PDF con tu logo el mismo día.',
   },
   {
-    visual: 'catalog',
-    tag: 'Catálogos digitales',
-    title: 'Tu catálogo en un link',
-    desc: 'Tus productos con foto y precio, listos para mandar por WhatsApp o redes.',
+    visual: 'database',
+    tag: 'Bases de datos',
+    title: 'Tu información ordenada y segura',
+    desc: 'Diseñamos y respaldamos dónde vive tu información. Nada duplicado y nada perdido.',
   },
   {
     visual: 'server',
@@ -118,7 +155,7 @@ export default function Services() {
           </Reveal>
           <Reveal delay={100}>
             <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              Ocho formas de quitarte trabajo de encima
+              Catorce formas de quitarte trabajo de encima
             </h2>
           </Reveal>
           <Reveal delay={160}>
@@ -215,6 +252,21 @@ export default function Services() {
             Desliza para explorar
           </span>
         </div>
+
+        {/* Oculto hasta que el catálogo esté listo para publicarse (SHOW_CATALOGO) */}
+        {SHOW_CATALOGO && (
+          <div className="container-x mt-6 flex justify-center">
+            <a
+              href={CATALOGO_URL}
+              className="inline-flex items-center gap-2 rounded-full border border-ink-line px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-fox-500 hover:text-fox-400"
+            >
+              Ver catálogo
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+          </div>
+        )}
       </div>
     </section>
   )

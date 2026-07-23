@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { IconWhatsapp } from './icons'
 import { WHATSAPP_URL } from '../lib/contacto'
+import { CATALOGO_URL, SHOW_CATALOGO } from '../lib/flags'
 
 const links = [
   { href: '#servicios', label: 'Qué hacemos' },
@@ -52,6 +53,15 @@ export default function Header() {
               {l.label}
             </a>
           ))}
+          {/* Oculto hasta que el catálogo esté listo para publicarse (SHOW_CATALOGO) */}
+          {SHOW_CATALOGO && (
+            <a
+              href={CATALOGO_URL}
+              className="text-sm font-semibold text-white transition-colors hover:text-fox-400"
+            >
+              Ver catálogo
+            </a>
+          )}
         </nav>
 
         <div className="hidden md:block">
@@ -88,6 +98,15 @@ export default function Header() {
                 {l.label}
               </a>
             ))}
+            {SHOW_CATALOGO && (
+              <a
+                href={CATALOGO_URL}
+                onClick={() => setOpen(false)}
+                className="py-2.5 font-semibold text-white"
+              >
+                Ver catálogo
+              </a>
+            )}
             <a
               href={WHATSAPP_URL}
               target="_blank"
