@@ -17,6 +17,8 @@ const isKnownRoute = ['', '/', '/index.html'].includes(
 
 export default function App() {
   useSmoothScroll()
+  // Antes del return: los hooks no pueden quedar detrás de una condición
+  useHashLanding()
 
   if (!isKnownRoute) return <NotFound />
 
