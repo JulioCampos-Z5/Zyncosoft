@@ -6,7 +6,7 @@ import { categorias, proyectos, type CategoriaProyecto } from '../data/proyectos
 
 type Filtro = CategoriaProyecto | 'Todo'
 
-export default function Catalogo() {
+export default function Proyectos() {
   const [filtro, setFiltro] = useState<Filtro>('Todo')
 
   // Solo se ofrecen los filtros que de verdad tienen trabajos detrás
@@ -74,7 +74,7 @@ export default function Catalogo() {
             </Reveal>
             <Reveal delay={80}>
               <p className="mt-8 text-sm font-semibold uppercase tracking-widest text-fox-500">
-                Catálogo
+                Proyectos
               </p>
             </Reveal>
             <Reveal delay={140}>
@@ -199,7 +199,7 @@ export default function Catalogo() {
                 )
               })}
 
-              {/* Cierre: invitación a formar parte del catálogo */}
+              {/* Cierre: invitación a formar parte de los proyectos */}
               <div className="flex flex-col justify-center rounded-3xl border border-dashed border-ink-line p-7 text-center">
                 <p className="text-lg font-semibold text-white">
                   ¿El siguiente es el tuyo?

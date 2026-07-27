@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { IconWhatsapp } from './icons'
 import { WHATSAPP_URL } from '../lib/contacto'
-import { CATALOGO_URL, SHOW_CATALOGO } from '../lib/flags'
+import { PROYECTOS_URL, SHOW_PROYECTOS } from '../lib/flags'
 
 const links = [
   { href: '#servicios', label: 'Qué hacemos' },
@@ -53,13 +53,13 @@ export default function Header() {
               {l.label}
             </a>
           ))}
-          {/* Oculto hasta que el catálogo esté listo para publicarse (SHOW_CATALOGO) */}
-          {SHOW_CATALOGO && (
+          {/* Oculto hasta que la vista de proyectos esté lista para publicarse (SHOW_PROYECTOS) */}
+          {SHOW_PROYECTOS && (
             <a
-              href={CATALOGO_URL}
+              href={PROYECTOS_URL}
               className="text-sm font-semibold text-white transition-colors hover:text-fox-400"
             >
-              Ver catálogo
+              Ver proyectos
             </a>
           )}
         </nav>
@@ -98,13 +98,13 @@ export default function Header() {
                 {l.label}
               </a>
             ))}
-            {SHOW_CATALOGO && (
+            {SHOW_PROYECTOS && (
               <a
-                href={CATALOGO_URL}
+                href={PROYECTOS_URL}
                 onClick={() => setOpen(false)}
                 className="py-2.5 font-semibold text-white"
               >
-                Ver catálogo
+                Ver proyectos
               </a>
             )}
             <a

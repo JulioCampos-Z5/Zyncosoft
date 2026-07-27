@@ -1,4 +1,7 @@
-const cols = [
+import { PROYECTOS_URL } from '../lib/flags'
+
+/** `proyectos` marca la columna que además lleva el acceso a /proyectos. */
+const cols: { title: string; links: string[]; proyectos?: boolean }[] = [
   {
     title: 'Para ordenar tu operación',
     links: [
@@ -21,6 +24,8 @@ const cols = [
   {
     title: 'Zyncosoft',
     links: ['Qué hacemos', 'Por qué nosotros', 'Cómo trabajamos', 'Contacto'],
+    // El acceso a proyectos va al final de esta columna
+    proyectos: true,
   },
 ]
 
@@ -58,6 +63,16 @@ export default function Footer() {
                     </a>
                   </li>
                 ))}
+                {c.proyectos && (
+                  <li>
+                    <a
+                      href={PROYECTOS_URL}
+                      className="text-sm text-neutral-400 transition-colors hover:text-white"
+                    >
+                      Proyectos
+                    </a>
+                  </li>
+                )}
               </ul>
             </div>
           ))}

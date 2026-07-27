@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { usePinProgress } from '../hooks/useScrollProgress'
 import { clamp, mapRange } from '../lib/anim'
-import { CATALOGO_URL, SHOW_CATALOGO } from '../lib/flags'
+import { PROYECTOS_URL, SHOW_PROYECTOS } from '../lib/flags'
 import Reveal from './Reveal'
 import { serviceVisuals, type ServiceVisualKey } from './ServiceVisuals'
 
@@ -253,14 +253,14 @@ export default function Services() {
           </span>
         </div>
 
-        {/* Oculto hasta que el catálogo esté listo para publicarse (SHOW_CATALOGO) */}
-        {SHOW_CATALOGO && (
+        {/* Oculto hasta que la vista de proyectos esté lista para publicarse (SHOW_PROYECTOS) */}
+        {SHOW_PROYECTOS && (
           <div className="container-x mt-6 flex justify-center">
             <a
-              href={CATALOGO_URL}
+              href={PROYECTOS_URL}
               className="inline-flex items-center gap-2 rounded-full border border-ink-line px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-fox-500 hover:text-fox-400"
             >
-              Ver catálogo
+              Ver proyectos
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M13 6l6 6-6 6" />
               </svg>

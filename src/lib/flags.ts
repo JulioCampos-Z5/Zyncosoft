@@ -3,8 +3,8 @@
  * muestran al público. Cambiar a `true` cuando toque publicarlas.
  */
 
-/** Enlace "Ver catálogo" en el nav y debajo del carril de soluciones. */
-export const SHOW_CATALOGO: boolean = false
+/** Enlace "Ver proyectos" en el nav y debajo del carril de soluciones. */
+export const SHOW_PROYECTOS: boolean = false
 
-/** Ruta de la vista de catálogo de trabajos. */
-export const CATALOGO_URL = '/catalogo'
+/** Ruta de la vista de proyectos. */
+export const PROYECTOS_URL = '/proyectos'

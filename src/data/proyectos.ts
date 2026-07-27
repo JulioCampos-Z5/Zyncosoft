@@ -1,5 +1,5 @@
 /**
- * Catálogo de trabajos hechos por Zyncosoft.
+ * Proyectos hechos por Zyncosoft.
  *
  * Cada proyecto necesita al menos `nombre`, `categoria`, `resumen` y, si es
  * público, su `url`. Los que no llevan `url` se muestran como trabajo privado
@@ -42,9 +42,20 @@ export const proyectos: Proyecto[] = [
     categoria: 'Página web',
     resumen:
       'Sitio del consultorio con su especialidad, ubicación y contacto directo, para que un paciente nuevo lo encuentre y le escriba sin intermediarios.',
-    url: 'https://dr-ricardo-estrada-garcia.julioz5435.workers.dev/',
+    url: 'https://dr-ricardo-estrada-garcia.pages.dev/',
     anio: 2025,
     etiquetas: ['Sitio médico', 'Contacto directo'],
+  },
+  {
+    slug: 'tarjeta-dr-ricardo-estrada-garcia',
+    nombre: 'Tarjeta digital Dr. Ricardo Estrada García',
+    cliente: 'Dr. Ricardo Estrada García',
+    categoria: 'Tarjeta digital',
+    resumen:
+      'Su tarjeta de presentación en un link: consultorios, teléfono y agenda de citas a un toque, lista para compartir por WhatsApp o con un QR.',
+    url: 'https://dr-ricardo-estrada-garcia.pages.dev/tarjeta/',
+    anio: 2025,
+    etiquetas: ['Link compartible', 'QR', 'Agenda de citas'],
   },
   {
     slug: 'tarjeta-zyncosoft',
@@ -89,7 +100,7 @@ export const proyectos: Proyecto[] = [
   },
 ]
 
-/** Orden en que aparecen los filtros de la vista de catálogo. */
+/** Orden en que aparecen los filtros de la vista de proyectos. */
 export const categorias: CategoriaProyecto[] = [
   'Página web',
   'Venta en línea',
