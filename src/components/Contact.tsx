@@ -2,6 +2,8 @@ import { useState } from 'react'
 import {
   IconArrow,
   IconCheck,
+  IconInstagram,
+  IconLinkedin,
   IconMail,
   IconShare,
   IconWhatsapp,
@@ -9,6 +11,8 @@ import {
 import { useReveal } from '../hooks/useScrollProgress'
 import {
   CORREO,
+  INSTAGRAM_URL,
+  LINKEDIN_URL,
   QR_WHATSAPP,
   SITIO_URL,
   TELEFONO_VISIBLE,
@@ -149,25 +153,33 @@ export default function Contact() {
                 </a>
                 <a
                   href={`mailto:${CORREO}`}
-                  className="group inline-flex items-center gap-3 rounded-2xl border border-ink-line bg-ink/50 px-4 py-3 text-neutral-300 transition-colors hover:border-fox-600/40 hover:text-white"
+                  className="group inline-flex min-w-0 items-center gap-3 rounded-2xl border border-ink-line bg-ink/50 px-4 py-3 text-neutral-300 transition-colors hover:border-fox-600/40 hover:text-white"
                 >
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-fox-500/10 text-fox-400 ring-1 ring-inset ring-fox-500/20 transition-transform group-hover:scale-105">
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-fox-500/10 text-fox-400 ring-1 ring-inset ring-fox-500/20 transition-transform group-hover:scale-105">
                     <IconMail className="h-5 w-5" />
                   </span>
-                  {CORREO}
+                  <span className="truncate">{CORREO}</span>
                 </a>
 
-                {/* QR al chat de WhatsApp + compartir el sitio */}
-                <div className="flex items-center gap-4 rounded-2xl border border-ink-line bg-ink/50 p-4">
-                  <img
-                    src={QR_WHATSAPP}
-                    alt="Código QR que abre una conversación de WhatsApp con Zyncosoft"
-                    width={104}
-                    height={104}
-                    loading="lazy"
-                    className="h-26 w-26 shrink-0 rounded-lg bg-white p-1.5"
-                  />
-                  <div className="min-w-0">
+                {/* Redes de la empresa, apiladas debajo del correo */}
+                <Red
+                  href={LINKEDIN_URL}
+                  nombre="LinkedIn"
+                  color="#0A66C2"
+                  icono={<IconLinkedin className="h-5 w-5" />}
+                />
+                <Red
+                  href={INSTAGRAM_URL}
+                  nombre="Instagram"
+                  color="#E1306C"
+                  icono={<IconInstagram className="h-5 w-5" />}
+                />
+
+                {/* QR al chat de WhatsApp + compartir el sitio.
+                    En celular va apilado (texto, QR y botón); desde sm el QR
+                    pasa a la izquierda y el texto queda a su derecha. */}
+                <div className="grid justify-items-center gap-4 rounded-2xl border border-ink-line bg-ink/50 p-4 text-center sm:grid-cols-[auto_1fr] sm:justify-items-start sm:text-left">
+                  <div className="min-w-0 sm:col-start-2 sm:row-start-1">
                     <p className="text-sm font-semibold text-white">
                       Escanea y escríbenos
                     </p>
@@ -175,6 +187,16 @@ export default function Contact() {
                       Apunta la cámara de tu celular al código y se abre el chat
                       solo.
                     </p>
+                  </div>
+                  <img
+                    src={QR_WHATSAPP}
+                    alt="Código QR que abre una conversación de WhatsApp con Zyncosoft"
+                    width={104}
+                    height={104}
+                    loading="lazy"
+                    className="h-auto w-full rounded-xl bg-white p-2.5 sm:col-start-1 sm:row-span-2 sm:row-start-1 sm:h-26 sm:w-26 sm:shrink-0 sm:self-center sm:rounded-lg sm:p-1.5"
+                  />
+                  <div className="sm:col-start-2 sm:row-start-2">
                     <BotonCompartir />
                   </div>
                 </div>
@@ -369,6 +391,45 @@ export default function Contact() {
 }
 
 /**
+ * Enlace a una red social de la empresa. El color de marca solo se usa en el
+ * cuadro del icono (en hex + alfa) para no romper la paleta del sitio.
+ */
+function Red({
+  href,
+  nombre,
+  color,
+  icono,
+}: {
+  href: string
+  nombre: string
+  color: string
+  icono: React.ReactNode
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Zyncosoft en ${nombre}`}
+      title={`Zyncosoft en ${nombre}`}
+      className="group inline-flex items-center gap-3 rounded-2xl border border-ink-line bg-ink/50 px-4 py-3 text-sm font-semibold text-neutral-300 transition-colors hover:border-fox-600/40 hover:text-white"
+    >
+      <span
+        className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform group-hover:scale-105"
+        style={{
+          color,
+          backgroundColor: `${color}1A`,
+          boxShadow: `inset 0 0 0 1px ${color}40`,
+        }}
+      >
+        {icono}
+      </span>
+      {nombre}
+    </a>
+  )
+}
+
+/**
  * Comparte el sitio. En celular abre el menú nativo de compartir; en
  * escritorio, donde casi ningún navegador lo tiene, copia el enlace.
  */
@@ -398,7 +459,7 @@ function BotonCompartir() {
     <button
       type="button"
       onClick={compartir}
-      className="mt-3 inline-flex items-center gap-2 rounded-full border border-ink-line bg-ink-soft px-4 py-2 text-sm font-semibold text-neutral-300 transition-colors hover:border-fox-600/40 hover:text-white"
+      className="inline-flex items-center gap-2 rounded-full border border-ink-line bg-ink-soft px-4 py-2 text-sm font-semibold text-neutral-300 transition-colors hover:border-fox-600/40 hover:text-white"
     >
       {copiado ? (
         <>
