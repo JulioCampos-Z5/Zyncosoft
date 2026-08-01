@@ -33,6 +33,12 @@ const services: Service[] = [
     desc: 'Tus productos con foto y precio, listos para mandar por WhatsApp o redes.',
   },
   {
+    visual: 'menu',
+    tag: 'Menús digitales',
+    title: 'Tu carta en el celular del cliente',
+    desc: 'El comensal escanea el QR de la mesa y ve tu menú con fotos y precios. Cambias un precio sin reimprimir nada.',
+  },
+  {
     visual: 'card',
     tag: 'Tarjetas digitales',
     title: 'Tu tarjeta de presentación, sin papel',
@@ -155,7 +161,7 @@ export default function Services() {
           </Reveal>
           <Reveal delay={100}>
             <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              Catorce formas de quitarte trabajo de encima
+              Quince formas de quitarte trabajo de encima
             </h2>
           </Reveal>
           <Reveal delay={160}>

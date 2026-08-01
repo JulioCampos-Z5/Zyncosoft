@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import Reveal from '../components/Reveal'
+import PageHeader from '../components/PageHeader'
 import Footer from '../components/Footer'
 import WhatsappFab from '../components/WhatsappFab'
 import { categorias, proyectos, type CategoriaProyecto } from '../data/proyectos'
@@ -27,28 +28,7 @@ export default function Proyectos() {
   return (
     <>
       {/* Cabecera propia: la vista vive fuera del scroll de la portada */}
-      <header className="border-b border-ink-line/60 bg-ink/85 backdrop-blur-xl">
-        <div className="container-x flex h-16 items-center justify-between">
-          <a href="/" className="flex items-center gap-2.5" aria-label="Inicio Zyncosoft">
-            <img
-              src="/logo.png"
-              alt="Logotipo de Zyncosoft"
-              width={36}
-              height={36}
-              className="h-9 w-9 rounded-lg bg-white p-0.5"
-            />
-            <span className="font-display text-lg font-semibold tracking-tight text-white">
-              Zyncosoft
-            </span>
-          </a>
-          <a
-            href="/#contacto"
-            className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-ink transition-colors hover:bg-fox-500"
-          >
-            Hablemos
-          </a>
-        </div>
-      </header>
+      <PageHeader />
 
       <main>
         <section className="relative overflow-hidden py-16 sm:py-20">

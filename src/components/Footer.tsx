@@ -1,7 +1,7 @@
-import { PROYECTOS_URL } from '../lib/flags'
+import { PRODUCTOS_URL, PROYECTOS_URL } from '../lib/flags'
 
-/** `proyectos` marca la columna que además lleva el acceso a /proyectos. */
-const cols: { title: string; links: string[]; proyectos?: boolean }[] = [
+/** `vistas` marca la columna que además lleva el acceso a /productos y /proyectos. */
+const cols: { title: string; links: string[]; vistas?: boolean }[] = [
   {
     title: 'Para ordenar tu operación',
     links: [
@@ -10,6 +10,7 @@ const cols: { title: string; links: string[]; proyectos?: boolean }[] = [
       'Punto de venta',
       'Cotizaciones',
       'Catálogo en línea',
+      'Menú digital para restaurantes',
     ],
   },
   {
@@ -24,8 +25,8 @@ const cols: { title: string; links: string[]; proyectos?: boolean }[] = [
   {
     title: 'Zyncosoft',
     links: ['Qué hacemos', 'Por qué nosotros', 'Cómo trabajamos', 'Contacto'],
-    // El acceso a proyectos va al final de esta columna
-    proyectos: true,
+    // El acceso a las vistas aparte va al final de esta columna
+    vistas: true,
   },
 ]
 
@@ -63,15 +64,25 @@ export default function Footer() {
                     </a>
                   </li>
                 ))}
-                {c.proyectos && (
-                  <li>
-                    <a
-                      href={PROYECTOS_URL}
-                      className="text-sm text-neutral-400 transition-colors hover:text-white"
-                    >
-                      Proyectos
-                    </a>
-                  </li>
+                {c.vistas && (
+                  <>
+                    <li>
+                      <a
+                        href={PRODUCTOS_URL}
+                        className="text-sm text-neutral-400 transition-colors hover:text-white"
+                      >
+                        Productos
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href={PROYECTOS_URL}
+                        className="text-sm text-neutral-400 transition-colors hover:text-white"
+                      >
+                        Proyectos
+                      </a>
+                    </li>
+                  </>
                 )}
               </ul>
             </div>

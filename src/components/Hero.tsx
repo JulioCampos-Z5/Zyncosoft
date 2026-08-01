@@ -9,6 +9,7 @@ const badges = [
   'Punto de venta',
   'Cotizaciones',
   'Catálogo en línea',
+  'Menú digital',
   'Correo y dominio',
 ]
 

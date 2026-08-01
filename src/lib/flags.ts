@@ -8,3 +8,6 @@ export const SHOW_PROYECTOS: boolean = false
 
 /** Ruta de la vista de proyectos. */
 export const PROYECTOS_URL = '/proyectos'
+
+/** Ruta de la vista de productos. */
+export const PRODUCTOS_URL = '/productos'

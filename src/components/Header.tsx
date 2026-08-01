@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { IconWhatsapp } from './icons'
 import { WHATSAPP_URL } from '../lib/contacto'
-import { PROYECTOS_URL, SHOW_PROYECTOS } from '../lib/flags'
+import { PRODUCTOS_URL, PROYECTOS_URL, SHOW_PROYECTOS } from '../lib/flags'
 
 const links = [
   { href: '#servicios', label: 'Qué hacemos' },
   { href: '#porque', label: 'Por qué nosotros' },
   { href: '#proceso', label: 'Cómo trabajamos' },
   { href: '#contacto', label: 'Contacto' },
+  { href: PRODUCTOS_URL, label: 'Productos' },
 ]
 
 export default function Header() {

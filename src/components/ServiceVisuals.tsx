@@ -458,6 +458,68 @@ export function VisualCard({ className }: VisualProps) {
   )
 }
 
+/** Menús digitales — QR de la mesa y la carta abierta en el celular. */
+export function VisualMenu({ className }: VisualProps) {
+  return (
+    <Svg className={className}>
+      <Window>
+        {/* QR sobre la mesa */}
+        <rect x="26" y="48" width="92" height="92" rx="10" fill={PANEL} stroke={LINE} />
+        {[0, 1, 2].map((r) =>
+          [0, 1, 2].map((c) => {
+            const solid = (r * 3 + c) % 3 !== 1
+            return (
+              <rect
+                key={`${r}-${c}`}
+                x={40 + c * 24}
+                y={62 + r * 24}
+                width="18"
+                height="18"
+                rx="3"
+                fill={solid ? FOX : '#2a2a2a'}
+                opacity={solid ? 0.85 : 1}
+              />
+            )
+          }),
+        )}
+        {/* flecha del escaneo */}
+        <path d="M126 94h28" fill="none" stroke={LINE} strokeWidth="1.6" strokeDasharray="4 4" />
+        <path d="M148 89l7 5-7 5" fill="none" stroke={FOX} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        {/* carta en el celular */}
+        <rect x="164" y="40" width="76" height="112" rx="12" fill={PANEL} stroke={FOX} />
+        <rect x="188" y="46" width="28" height="4" rx="2" fill={LINE} />
+        {/* categorías */}
+        {[0, 1, 2].map((i) => (
+          <rect
+            key={`cat${i}`}
+            x={172 + i * 22}
+            y="58"
+            width="18"
+            height="7"
+            rx="3.5"
+            fill={i === 0 ? FOX : '#2a2a2a'}
+          />
+        ))}
+        {/* platillos con foto y precio */}
+        {[0, 1, 2].map((i) => (
+          <g key={`plato${i}`}>
+            <rect x="172" y={72 + i * 26} width="60" height="22" rx="6" fill="#161616" stroke={i === 0 ? FOX : LINE} />
+            <rect x="176" y={76 + i * 26} width="14" height="14" rx="4" fill={i === 0 ? 'rgba(255,122,26,0.16)' : '#1c1c1c'} stroke={i === 0 ? FOX : LINE} />
+            <rect x="194" y={78 + i * 26} width="32" height="4" rx="2" fill={GHOST} />
+            <rect x="194" y={86 + i * 26} width="18" height="5" rx="2.5" fill={i === 0 ? FOX_L : '#4b4b4b'} />
+          </g>
+        ))}
+        {/* pedido por WhatsApp */}
+        <rect x="252" y="60" width="44" height="14" rx="7" fill="rgba(255,122,26,0.14)" stroke={FOX} />
+        <rect x="260" y="65" width="28" height="4" rx="2" fill={FOX_L} />
+        {[0, 1].map((i) => (
+          <rect key={`tag${i}`} x="252" y={84 + i * 18} width="44" height="12" rx="6" fill="#1c1c1c" stroke={LINE} />
+        ))}
+      </Window>
+    </Svg>
+  )
+}
+
 /** Bases de datos — discos apilados, relaciones y consulta. */
 export function VisualDatabase({ className }: VisualProps) {
   return (
@@ -502,6 +564,7 @@ export const serviceVisuals = {
   mobile: VisualMobile,
   desktop: VisualDesktop,
   card: VisualCard,
+  menu: VisualMenu,
   database: VisualDatabase,
   erp: VisualErp,
   crm: VisualCrm,
