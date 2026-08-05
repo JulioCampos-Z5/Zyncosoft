@@ -133,6 +133,8 @@ export default function Services() {
     services.length,
     Math.round(mapRange(progress, 0.06, 0.98, 1, services.length)),
   )
+  // Se desvanece al acercarse al final: ya no hay hacia dónde seguir
+  const hintOpacity = 1 - clamp(mapRange(progress, 0.88, 0.98, 0, 1))
 
   return (
     <section
@@ -254,8 +256,22 @@ export default function Services() {
               style={{ width: `${clamp(progress) * 100}%` }}
             />
           </div>
-          <span className="hidden text-xs uppercase tracking-widest text-neutral-500 sm:block">
-            Desliza para explorar
+        </div>
+
+        {/*
+          Aviso de que la sección continúa. El carril avanza con el scroll
+          vertical, así que sin esto parece que la página se quedó trabada
+          en la misma pantalla. Es el mismo indicador del hero, para que se
+          lea como el mismo gesto; se desvanece al llegar al final.
+        */}
+        <div
+          aria-hidden
+          className="mt-4 flex flex-col items-center gap-2 text-neutral-500 transition-opacity duration-300"
+          style={{ opacity: hintOpacity }}
+        >
+          <span className="text-[11px] uppercase tracking-[0.2em]">Desliza</span>
+          <span className="flex h-9 w-5 items-start justify-center rounded-full border border-neutral-600 p-1">
+            <span className="h-2 w-1 animate-scroll-hint rounded-full bg-fox-500" />
           </span>
         </div>
 

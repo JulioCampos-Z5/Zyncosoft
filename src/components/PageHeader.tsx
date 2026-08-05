@@ -9,7 +9,7 @@ export default function PageHeader() {
       <div className="container-x flex h-16 items-center justify-between">
         <a href="/" className="flex items-center gap-2.5" aria-label="Inicio Zyncosoft">
           <img
-            src="/logo.png"
+            src="/logo.webp"
             alt="Logotipo de Zyncosoft"
             width={36}
             height={36}

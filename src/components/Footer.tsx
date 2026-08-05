@@ -38,7 +38,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="flex items-center gap-5 lg:col-span-2">
             <img
-              src="/logo.png"
+              src="/logo.webp"
               alt="Logotipo de Zyncosoft"
               width={176}
               height={176}

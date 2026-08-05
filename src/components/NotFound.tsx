@@ -55,7 +55,7 @@ export default function NotFound() {
           aria-label="Volver al inicio de Zyncosoft"
         >
           <img
-            src="/logo.png"
+            src="/logo.webp"
             alt="Logotipo de Zyncosoft"
             width={36}
             height={36}
