@@ -101,6 +101,13 @@ export function useReveal<T extends HTMLElement>(threshold = 0.2) {
       setShown(true)
       return
     }
+    // Sin IntersectionObserver no hay forma de saber cuándo entra en
+    // pantalla: mostramos el contenido de una vez en lugar de dejarlo
+    // invisible (o dejar los contadores en cero) para siempre.
+    if (typeof IntersectionObserver === 'undefined') {
+      setShown(true)
+      return
+    }
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {

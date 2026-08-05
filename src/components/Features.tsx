@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { IconBolt, IconGear, IconShield } from './icons'
 import { useReveal } from '../hooks/useScrollProgress'
 import { easeOutCubic } from '../lib/anim'
@@ -24,25 +24,43 @@ const benefits = [
 ]
 
 const stats = [
-  { to: 8, suffix: '', label: 'Servicios, todos con nosotros' },
-  { to: 1, suffix: '', label: 'Número al que llamas si algo pasa' },
-  { to: 24, suffix: '/7', label: 'Vigilancia de tus sistemas' },
-  { to: 0, suffix: '', label: 'Lo que cuesta la primera plática' },
+  { to: 8, prefix: '', suffix: '', label: 'Servicios, todos con nosotros' },
+  { to: 1, prefix: '', suffix: '', label: 'Número al que llamas si algo pasa' },
+  { to: 24, prefix: '', suffix: '/7', label: 'Vigilancia de tus sistemas' },
+  { to: 0, prefix: '$', suffix: '', label: 'Lo que cuesta la primera plática' },
 ]
 
 function CountUp({
   to,
+  prefix,
   suffix,
   start,
 }: {
   to: number
+  prefix: string
   suffix: string
   start: boolean
 }) {
-  const [value, setValue] = useState(0)
+  // El estado inicial es el valor FINAL, no cero. Así, si JavaScript no
+  // llega a correr o el observador nunca dispara, se lee el número real
+  // en vez de un "0" en plena sección de credibilidad.
+  const [value, setValue] = useState(to)
+  const arrancoEnCero = useRef(false)
+
+  // Solo bajamos a cero cuando sabemos que sí vamos a animar, y lo
+  // hacemos antes de pintar para que no se vea el salto del número.
+  useLayoutEffect(() => {
+    if (start || arrancoEnCero.current) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    arrancoEnCero.current = true
+    setValue(0)
+  }, [start])
+
   useEffect(() => {
     if (!start) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Nunca arrancamos en cero (sin animación o ya visible al cargar):
+    // mostramos el valor final directo.
+    if (!arrancoEnCero.current) {
       setValue(to)
       return
     }
@@ -57,8 +75,10 @@ function CountUp({
     raf = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(raf)
   }, [start, to])
+
   return (
     <span>
+      {prefix}
       {value}
       {suffix}
     </span>
@@ -107,7 +127,12 @@ export default function Features() {
                   }}
                 >
                   <dt className="font-display text-3xl font-bold text-white sm:text-4xl">
-                    <CountUp to={s.to} suffix={s.suffix} start={shown} />
+                    <CountUp
+                      to={s.to}
+                      prefix={s.prefix}
+                      suffix={s.suffix}
+                      start={shown}
+                    />
                   </dt>
                   <dd className="mt-1 text-sm text-neutral-400">{s.label}</dd>
                 </div>

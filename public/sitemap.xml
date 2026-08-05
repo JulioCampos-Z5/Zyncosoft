@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Solo van páginas reales, es decir las rutas que atiende src/main.tsx.
+  Los anclas de la portada (#servicios, #contacto) no se listan: no son
+  páginas aparte y Google las ignora dentro de un sitemap.
+
+  Al conectar el dominio propio hay que cambiar el host aquí, en robots.txt
+  y en las etiquetas canonical/Open Graph de index.html.
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.zyncosoft.com/</loc>
+    <loc>https://zyncosoft.pages.dev/</loc>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.zyncosoft.com/#servicios</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.zyncosoft.com/productos</loc>
+    <loc>https://zyncosoft.pages.dev/productos</loc>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.zyncosoft.com/#contacto</loc>
+    <loc>https://zyncosoft.pages.dev/proyectos</loc>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
 </urlset>

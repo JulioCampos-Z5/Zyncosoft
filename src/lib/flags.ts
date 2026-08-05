@@ -4,7 +4,7 @@
  */
 
 /** Enlace "Ver proyectos" en el nav y debajo del carril de soluciones. */
-export const SHOW_PROYECTOS: boolean = false
+export const SHOW_PROYECTOS: boolean = true
 
 /** Ruta de la vista de proyectos. */
 export const PROYECTOS_URL = '/proyectos'
